@@ -1,7 +1,7 @@
 # Use Node.js base image
 FROM node:20-slim
 
-# Install Puppeteer dependencies
+# Install Puppeteer dependencies including libx11-6
 RUN apt-get update && apt-get install -y \
   wget \
   ca-certificates \
@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
   libgdk-pixbuf2.0-0 \
   libnspr4 \
   libnss3 \
+  libx11-6 \                # <--- Added this line
   libx11-xcb1 \
   libxcomposite1 \
   libxdamage1 \
@@ -26,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 # Set working directory
 WORKDIR /app
 
-# Copy and install deps
+# Copy and install dependencies
 COPY package*.json ./
 RUN npm install
 
@@ -36,5 +37,5 @@ COPY . .
 # Expose port
 EXPOSE 8080
 
-# Start app
+# Start the app
 CMD ["npm", "start"]
