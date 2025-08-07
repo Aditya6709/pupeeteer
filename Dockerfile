@@ -1,7 +1,7 @@
 # Use Node.js base image
 FROM node:20-slim
 
-# Install Puppeteer dependencies including libx11-6
+# Install Puppeteer dependencies including libgbm1
 RUN apt-get update && apt-get install -y \
   wget \
   ca-certificates \
@@ -15,11 +15,13 @@ RUN apt-get update && apt-get install -y \
   libgdk-pixbuf2.0-0 \
   libnspr4 \
   libnss3 \
-  libx11-6 \                # <--- Added this line
+  libx11-6 \
   libx11-xcb1 \
   libxcomposite1 \
   libxdamage1 \
   libxrandr2 \
+  libgbm1 \                    # ✅ This is critical
+  libxshmfence1 \              # Optional but helps in some environments
   xdg-utils \
   --no-install-recommends && \
   rm -rf /var/lib/apt/lists/*
