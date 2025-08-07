@@ -4,6 +4,11 @@ import puppeteer from 'puppeteer';
 const app = express();
 const PORT = process.env.PORT || 8080;
 
+// Root route to prevent 404
+app.get('/', (req, res) => {
+  res.send('API is up. Use /scrape to get data.');
+});
+
 app.get('/scrape', async (req, res) => {
   try {
     const browser = await puppeteer.launch({
