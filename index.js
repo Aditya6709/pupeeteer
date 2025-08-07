@@ -1,15 +1,8 @@
 import express from 'express';
 import puppeteer from 'puppeteer';
-import mongoose from 'mongoose';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI || 'your_mongo_uri_here')
-  .then(() => console.log('MongoDB connected'))
-  .catch((err) => console.error('MongoDB error:', err));
 
 app.get('/scrape', async (req, res) => {
   try {
@@ -48,7 +41,6 @@ app.get('/scrape', async (req, res) => {
     });
 
     await browser.close();
-
     res.json({ pets });
   } catch (err) {
     console.error('Scraping error:', err);
